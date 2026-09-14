@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec tsx src/index.ts"
+    "dev": "nodemon --exec tsx src/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +19,8 @@
     "jsonwebtoken": "^9.0.3",
     "nodemon": "^3.1.14",
     "pg": "^8.23.0",
-    "prisma": "^7.10.0"
+    "prisma": "^7.10.0",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
