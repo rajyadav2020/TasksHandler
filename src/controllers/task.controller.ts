@@ -4,13 +4,39 @@ import ApiError from "../utils/ApiError.js";
 
 // Get all tasks
 export const getAllTasks = async (req: Request, res: Response) => {
+  const page = Number(req.query.page);
+  const limit = Number(req.query.limit);
+
+  const skip = (page - 1) * limit;
+
   const tasks = await prisma.task.findMany({
+    where: {
+      userId: req.user!.userId
+    },
+    skip,
+    take: limit,
+    orderBy: {
+      createdAt: "desc"
+    }
+  });
+
+  const total = await prisma.task.count({
     where: {
       userId: req.user!.userId
     }
   });
 
-  return res.json(tasks);
+  const totalPages = Math.ceil(total / limit);
+
+  return res.json({
+    data: tasks,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages
+    }
+  });
 };
 
 // Create a task
